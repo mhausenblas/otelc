@@ -1,0 +1,40 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/otelc-opamp",
+    "crates/otelc-otlp",
+    "crates/otelc-tui",
+    "examples/mock-agent",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+authors = ["Michael Hausenblas"]
+repository = "https://github.com/mhausenblas/otelc"
+
+[workspace.dependencies]
+otelc-opamp = { path = "crates/otelc-opamp" }
+otelc-otlp = { path = "crates/otelc-otlp" }
+tokio = { version = "1", features = ["full"] }
+tokio-tungstenite = "0.29"
+futures-util = "0.3"
+prost = "0.14"
+tonic = "0.14"
+opentelemetry-proto = { version = "0.32", default-features = false, features = ["gen-tonic", "trace", "metrics", "logs"] }
+ratatui = "0.30"
+serde = { version = "1", features = ["derive"] }
+serde_yaml_ng = "0.10"
+uuid = { version = "1", features = ["v7"] }
+anyhow = "1"
+thiserror = "2"
+tracing = "0.1"
+tracing-subscriber = "0.3"
+tracing-appender = "0.2"
+clap = { version = "4", features = ["derive"] }
+bytes = "1"
+sha2 = "0.10"
+
+[profile.release]
+strip = true

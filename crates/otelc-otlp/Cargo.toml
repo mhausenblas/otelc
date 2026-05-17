@@ -1,0 +1,12 @@
+[package]
+name = "otelc-otlp"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+tokio = { workspace = true }
+tonic = { workspace = true }
+opentelemetry-proto = { workspace = true }
+tracing = { workspace = true }
+thiserror = { workspace = true }
