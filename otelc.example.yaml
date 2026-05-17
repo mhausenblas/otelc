@@ -1,0 +1,16 @@
+# Example otelc configuration file.
+#
+# Every field is optional. Values here act as defaults and are overridden by
+# command-line flags. Pass it with:  otelc --config otelc.example.yaml
+
+# OpAMP server WebSocket listen address (embedded mode).
+# Collectors / OpAMP supervisors connect to ws://<listen>/v1/opamp
+listen: 127.0.0.1:4320
+
+# OTLP/gRPC listen address for agent own-telemetry (embedded mode).
+# otelc offers this endpoint to agents via OpAMP OwnTelemetry connection
+# settings, so collectors push their own metrics/logs/traces here.
+otlp_listen: 127.0.0.1:4317
+
+# Base URL of an external OpAMP server (external mode only).
+external_url: http://127.0.0.1:8080

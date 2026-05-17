@@ -1,0 +1,22 @@
+[package]
+name = "mock-agent"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "mock-agent"
+path = "src/main.rs"
+
+[dependencies]
+otelc-opamp = { workspace = true }
+opentelemetry-proto = { workspace = true }
+tokio = { workspace = true }
+tokio-tungstenite = { workspace = true }
+tonic = { workspace = true }
+futures-util = { workspace = true }
+uuid = { workspace = true }
+anyhow = { workspace = true }
+clap = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
