@@ -1,17 +1,17 @@
 //! The Norton Commander colour palette.
 //!
-//! Classic DOS blue screen, cyan double-line panels, white body text, yellow
-//! accents, and a black-on-cyan function-key bar.
+//! Deep navy screen, yellow double-line panels, white body text, yellow
+//! accents, and a black-on-OTel-orange function-key bar.
 
 use ratatui::style::{Color, Modifier, Style};
 
-pub const BG: Color = Color::Blue;
+pub const BG: Color = Color::Rgb(0, 10, 60);
 pub const FG: Color = Color::White;
 pub const DIM: Color = Color::Gray;
 pub const ACCENT: Color = Color::Yellow;
-pub const BORDER: Color = Color::Cyan;
-pub const BORDER_ACTIVE: Color = Color::White;
-pub const BAR_BG: Color = Color::Cyan;
+pub const BORDER: Color = Color::Yellow;
+pub const BORDER_ACTIVE: Color = Color::LightYellow;
+pub const BAR_BG: Color = Color::Rgb(245, 168, 0);
 pub const BAR_FG: Color = Color::Black;
 pub const SEL_BG: Color = Color::Cyan;
 pub const SEL_FG: Color = Color::Black;
@@ -43,9 +43,17 @@ pub fn accent() -> Style {
     Style::default().fg(ACCENT).add_modifier(Modifier::BOLD)
 }
 
-/// Black-on-cyan bar (menu bar, function-key bar).
+/// Black-on-OTel-orange bar (menu bar, function-key bar).
 pub fn bar() -> Style {
     Style::default().bg(BAR_BG).fg(BAR_FG)
+}
+
+/// Inverted badge for function-key numbers: orange text on black.
+pub fn fnkey() -> Style {
+    Style::default()
+        .bg(BAR_FG)
+        .fg(BAR_BG)
+        .add_modifier(Modifier::BOLD)
 }
 
 /// The selection highlight bar.

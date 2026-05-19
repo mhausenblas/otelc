@@ -118,11 +118,8 @@ fn render_cmdline(frame: &mut Frame, area: Rect, app: &App) {
 fn render_fnbar(frame: &mut Frame, area: Rect) {
     let mut spans = Vec::new();
     for (num, label) in FN_KEYS {
-        spans.push(Span::styled(
-            format!(" {num}"),
-            Style::default().add_modifier(Modifier::BOLD),
-        ));
-        spans.push(Span::raw(format!("{label} ")));
+        spans.push(Span::styled(format!(" {num}"), theme::fnkey()));
+        spans.push(Span::raw(format!(" {label} ")));
     }
     frame.render_widget(Paragraph::new(Line::from(spans)).style(theme::bar()), area);
 }
