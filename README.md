@@ -1,61 +1,55 @@
 # otelc
 
-A **Norton Commander-style terminal UI** for managing fleets of
-**OpenTelemetry Collectors** over the **Open Agent Management Protocol
-(OpAMP)** — built for infrastructure and platform engineers.
+You may now Norton Commander, but do you know OTel Commander? As a
+infra or platform engineer, SRE, devops, you oftentimes need to deploy,
+scale, and troubleshoot a fleet of OpenTelemetry collectors. The OTel Commander
+`otelc` helps you to do this. It connects over Open Agent Management Protocol
+(OpAMP) to OTel collectors, allowing you to view, edit, visualize their
+configuration and get health insights incl. metrics and logs:
 
-`otelc` unifies what is normally several disconnected tools into one fast,
-keyboard-driven, terminal-native console: view and push collector
-configuration, watch each collector's own metrics and logs, introspect agent
-identity / capabilities / health, and visualize pipeline topology — all over
-OpAMP, with no external backend required.
+![OTel Commander overview](docs/images/otelc-main-preview.png)
 
-```
- otelc  Fleet Config Pipeline Metrics Logs Health  │  embedded ws://127.0.0.1:4320/v1/opamp · 3 agent(s)
-╔═ Fleet · 3 agent(s) ════════════════╗╔═ Pipeline · otel-gateway-01 ═════════════╗
-║ STATE NAME            VERSION STATUS ║║▣ traces                                  ║
-║●up   otel-agent-fra   0.110.0 Healthy║║   otlp ──▶ memory_limiter ▸ batch ──▶    ║
-║ otel-edge-collector  0.109.1 Recover ║║   otlphttp · spanmetrics⇄                ║
-║ otel-gateway-01      0.110.0 Healthy ║║▣ metrics                                 ║
-║                                      ║║   otlp · spanmetrics⇄ ──▶ batch ──▶ …    ║
-╚══════════════════════════════════════╝╚══════════════════════════════════════════╝
- 1Help 2Menu 3View 4Edit 5Push 6Restart 7Filter 8Health 9Menu 10Quit
-```
 
 See [`docs/design/mockups.md`](docs/design/mockups.md) for all screens.
 
 ## Status
 
-Working prototype. The embedded OpAMP server, the OTLP receiver, the full
-Norton Commander TUI, config push, restart, and the pipeline graph all work
-end-to-end. See [`docs/design/`](docs/design/) for the design and the roadmap
-(plain-HTTP OpAMP transport, config diff, TLS/mTLS, a concrete external-server
-adapter).
+Working prototype covering: The embedded OpAMP server, the OTLP receiver, collector config push, restart, and the pipeline graph all work end-to-end. See [`docs/design/`](docs/design/) for the design and the roadmap including component-level edits and probing (think OTTL), config diff, TLS/mTLS, and a concrete external-server adapter.
 
 ## Build
 
-Requires a stable Rust toolchain and `protoc` (the protobuf compiler, used by
+To build the tool, you need a stable Rust toolchain and `protoc` (the protobuf compiler, used by
 `prost-build`; the OpAMP `.proto` itself is vendored under `proto/`).
 
+To install `protoc`, do:
+
 ```sh
-# Debian/Ubuntu: apt-get install -y protobuf-compiler
-# macOS:         brew install protobuf
+# Debian/Ubuntu:
+apt-get install -y protobuf-compiler
+
+# macOS:
+brew install protobuf
+```
+
+Then you can build as follows:
+
+```sh
 cargo build --release
 ```
 
 ## Run
 
-`otelc` runs an **embedded OpAMP server** by default. Collectors — or their
-OpAMP supervisors — connect to it.
+`otelc` runs an embedded OpAMP server by default. Collectors or their
+OpAMP supervisors connect to it.
 
 ```sh
-otelc                               # OpAMP on ws://127.0.0.1:4320, OTLP on :4317
+otelc # OpAMP on ws://127.0.0.1:4320, OTLP on :4317
 otelc --listen 0.0.0.0:4320 --otlp-listen 0.0.0.0:4317
 otelc --config otelc.example.yaml
 otelc --mode external --external-url http://my-opamp-server:8080
 ```
 
-## Try it without a real collector
+### Try it without a real collector
 
 The `mock-agent` example simulates a fleet of OpenTelemetry Collectors — they
 connect over OpAMP, report a realistic multi-pipeline config and health, apply
@@ -78,7 +72,7 @@ panel, `1`–`6` to switch its view (Fleet / Config / Pipeline / Metrics / Logs 
 Health), `F4` to edit an agent's config and `F5` to push it, `F6` to restart an
 agent, `F1` for help, `F10` to quit.
 
-## Use a real OpAMP Supervisor
+### Use a real OpAMP Supervisor
 
 Point an [OpAMP Supervisor](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/cmd/opampsupervisor)
 at the embedded server by setting, in `supervisor.yaml`:
