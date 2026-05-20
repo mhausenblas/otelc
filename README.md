@@ -1,6 +1,6 @@
 # otelc
 
-You may now Norton Commander, but do you know OTel Commander? As a
+You may know Norton Commander, but do you know OTel Commander? As a
 infra or platform engineer, SRE, devops, you oftentimes need to deploy,
 scale, and troubleshoot a fleet of OpenTelemetry collectors. The OTel Commander
 `otelc` helps you to do this. It connects over Open Agent Management Protocol
